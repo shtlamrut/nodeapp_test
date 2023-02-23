@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+  labels:
+    release: beta
+    type: poc
+spec:
+  replicas: 3
+  selector:
+    matchLabels: 
+      type: poc
+  template:
+    metadata:
+      labels:
+        release: beta
+        type: poc
+      name: helloworld-pod
+    spec:
+      containers:
+       - name: helloworld-container
+         image: "shtlamrut/hello-world-node:v1"
+         ports: 
+          - containerPort: 8080
