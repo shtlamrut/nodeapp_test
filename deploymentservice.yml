@@ -1,41 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-deployment
+  name: nodeapp-deployment
   labels:
-    release: beta
-    type: poc
+    app: nodeapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
-    matchLabels: 
-      type: poc
+    matchLabels:
+      app: nodeapp
   template:
     metadata:
       labels:
-        release: beta
-        type: poc
-      name: helloworld-pod
+        app: nodeapp 
     spec:
       containers:
-       - name: helloworld-container
-         image: "shtlamrut/hello-world-node:v1"
-         ports: 
-          - containerPort: 8080
-          
-          
-         
-   ---
-   apiVersion: v1
-   kind: Service
-   metadata:
-     name: helloworld-service
-   spec:
-     type: NodePort
-     ports:
-        - targetPort: 8080
-          port: 80
-          nodePort: 30001
-     selector:
-        release: beta
-        type: poc
+      - name: nodeserver
+        image: shtlamrut/nodeapp:latest
+        ports:
+        - containerPort: 8080
+        
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp-service
+spec:
+  selector:
+    app: nodeapp 
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 8080
+    nodePort: 31110
