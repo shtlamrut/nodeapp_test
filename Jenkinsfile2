@@ -30,7 +30,7 @@ pipeline {
       steps {
        container('kubectl') {
           //kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes1")
-          sh "kubectl apply -f deploymentservice.yml"
+          sh "kubectl apply -f hello-world-deployment.yaml"
         }
       }
     }  
