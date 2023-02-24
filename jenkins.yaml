@@ -15,7 +15,19 @@ spec:
         - name: dockersock
           mountPath: /var/run/docker.sock  
         - name: sharedvolume
-          mountPath: /root/.docker      
+          mountPath: /root/.docker 
+    - name: kubectl
+      image: bitnami/kubectl
+      command:
+       - cat
+      tty: true
+      privileged: true
+      volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock  
+        - name: sharedvolume
+          mountPath: /root/.docker
+       
   volumes:
     - name: dockersock
       hostPath:
