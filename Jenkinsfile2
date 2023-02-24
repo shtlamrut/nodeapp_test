@@ -1,13 +1,7 @@
 pipeline {
-
- /*environment {
-    dockerimagename = "shtlamrut/nodeapp"
-    dockerImage = ""
-  }*/
-
   agent {
     kubernetes {
-      yaml '''
+      yaml """
         apiVersion: v1
         kind: Pod
         spec:
@@ -29,46 +23,36 @@ pipeline {
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock    
-        '''
+        """
     }
   }
-   stages {
+
+
+  stages {
 
     stage('Checkout Source') {
       steps {
         git 'https://github.com/shtlamrut/nodeapp_test.git'
       }
     }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
-        }
-      }
-    }
-
-    stage('Pushing Image') {
+    stage('Image Build') {
       environment {
-               registryCredential = 'dockerhublogin'
-           }
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
+        DOCKERHUB_CREDS = credentials('dockerhublogin')
+      }
+      steps {
+        container('docker') {
+          sh "docker build -t shtlamrut/nodeapp ."
+          sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW" 
+          sh "docker push shtlamrut/nodeapp"
         }
       }
-    }
-
     stage('Deploying App to Kubernetes') {
       steps {
         script {
           kubernetesDeploy(configs: "deploymentservice.yml", kubeconfigId: "kubernetes1")
         }
       }
+    }  
     }
-
-  }
-
-}
+    }
+    
