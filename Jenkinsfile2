@@ -25,6 +25,7 @@ pipeline {
           sh "docker push shtlamrut/nodeapp"
         }
       }
+      }
     stage('Deploying App to Kubernetes') {
       steps {
         script {
