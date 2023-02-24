@@ -1,9 +1,9 @@
 pipeline {
 
- environment {
+ /*environment {
     dockerimagename = "shtlamrut/nodeapp"
     dockerImage = ""
-  }
+  }*/
 
   agent {
     kubernetes {
