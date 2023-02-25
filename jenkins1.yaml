@@ -12,9 +12,13 @@ spec:
       command:
         - cat
       tty: true
+      privileged: true
       volumeMounts:
-       - mountPath: /var/run/docker.sock
-         name: docker-sock
+       - name: dockersock
+         mountPath: /var/run/docker.sock  
+       - name: sharedvolume
+         mountPath: /root/.docker   
+         
     - name: kubectl
       image: bitnami/kubectl
       command:
@@ -22,8 +26,10 @@ spec:
       tty: true
       privileged: true 
       volumeMounts:
-       - mountPath: /var/run/docker.sock
-         name: docker-sock
+       - name: dockersock
+         mountPath: /var/run/docker.sock  
+       - name: sharedvolume
+         mountPath: /root/.docker   
 volumes:
   - name: docker-sock
     hostPath:
