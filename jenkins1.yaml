@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
-    - name: tools
-      image: nekottyo/kustomize-kubeval
-      command:
-        - cat
-      tty: true  
+   - name: tools
+     image: nekottyo/kustomize-kubeval
+     command:
+       - cat
+     tty: true  
    - name: kubectl
      image: gcr.io/cloud-builders/kubectl
      command:
