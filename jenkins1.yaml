@@ -8,7 +8,7 @@ spec:
     emptyDir: {}
   containers:
   - name: kubectl
-    image: gcr.io/cloud-builders/kubectl
+    image: bitnami/kubectl
     command:
     - cat
     tty: true
