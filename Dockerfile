@@ -5,5 +5,5 @@ COPY package.json ./
 RUN npm install
 # Bundle application source code
 COPY . .
-EXPOSE 8080
+EXPOSE 8081
 CMD ["node", "index.js"]
