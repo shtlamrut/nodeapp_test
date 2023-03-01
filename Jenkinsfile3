@@ -23,6 +23,7 @@ pipeline {
          stage('Trigger manifest update') {
 		        steps {	 
 			          container('kubectl') {
+		sh 'sleep 5m'
                 sh 'kubectl apply -f ./deploymentservice.yaml'
                 }
            }
