@@ -29,7 +29,7 @@ spec:
           mountPath: /var/run/docker.sock  
         - name: sharedvolume
           mountPath: /root/.docker
-  ServiceAccount: default
+  #ServiceAccount: default
   volumes:
     - name: dockersock
       hostPath:
