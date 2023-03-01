@@ -23,7 +23,7 @@ pipeline {
          stage('Trigger manifest update') {
 		        steps {	 
 			          container('kubectl') {
-                sh 'kubectl apply -f deploymentservice'
+                sh 'kubectl apply -f ./deploymentservice.yaml'
                 }
            }
 		 }  
