@@ -1,49 +1,31 @@
 pipeline {
-
-  environment {
-    dockerimagename = "shtlamrut/nodeapp"
-    dockerImage = ""
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git 'https://github.com/shtlamrut/nodeapp_test.git'
-      }
-    }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
+     agent {
+        kubernetes {
+            yamlFile 'jenkins.yaml'
         }
-      }
     }
+     environment {
+		 dockerhub=credentials('dockerhublogin')
+     }		 
 
-    stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerhublogin'
+     stages {     
+         stage('Docker build and tag') {
+            steps {
+				        container ('docker') {
+                    sh 'docker build -t jenkins:latest .' 
+                    sh 'docker tag jenkins shtlamrut/jenkins:$BUILD_NUMBER'
+				          	sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+					          sh 'docker push docker.io/shtlamrut/jenkins:$BUILD_NUMBER'
+                    sh 'docker logout'
+                }
+            }
+         }
+         stage('Trigger manifest update') {
+		        steps {	 
+			          container('kubectl') {
+                sh 'kubectl apply -f deploymentservice'
+                }
            }
-      steps{
-        script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("latest")
-          }
-        }
-      }
-    }
-
-    stage('Deploying App to Kubernetes') {
-      steps {
-       container('kubectl') {
-        sh 'kubectl apply -f deploymentservice.yml'
-        }
-      }
-    }
-
-  }
-
-}
+		 }  
+	}	 
+} 
