@@ -12,10 +12,10 @@ pipeline {
          stage('Docker build and tag') {
             steps {
 				        container ('docker') {
-                    sh 'docker build -t jenkins:latest .' 
-                    sh 'docker tag jenkins shtlamrut/jenkins:$BUILD_NUMBER'
+                    sh 'docker build -t nodeapp:latest .' 
+                    sh 'docker tag jenkins shtlamrut/nodeapp:$BUILD_NUMBER'
 				          	sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-					          sh 'docker push docker.io/shtlamrut/jenkins:$BUILD_NUMBER'
+					          sh 'docker push docker.io/shtlamrut/nodeapp:$BUILD_NUMBER'
                     sh 'docker logout'
                 }
             }
