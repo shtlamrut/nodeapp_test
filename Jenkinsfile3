@@ -16,11 +16,11 @@ pipeline {
                     sh 'docker tag jenkins shtlamrut/nodeapp:$BUILD_NUMBER'
 				          	sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
 					          sh 'docker push docker.io/shtlamrut/nodeapp:$BUILD_NUMBER'
-                    sh 'docker logout'
+                    //sh 'docker logout'
                 }
             }
          }
-         stage('Trigger manifest update') {
+         stage('Deploy to K8s') {
 		        steps {	 
 			          container('kubectl') {
 		//sh 'sleep 5m'
