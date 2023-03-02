@@ -39,9 +39,9 @@ spec:
       }
       steps {
         container('docker') {
-          sh "docker build -t shtlamrut/my-app:latest ."
+          sh "docker build -t shtlamrut/nodeapp:latest ."
           sh "docker login --username $DOCKERHUB_CREDS_USR --password $DOCKERHUB_CREDS_PSW" 
-          sh "docker push shtlamrut/my-app:latest"
+          sh "docker push shtlamrut/nodeapp:latest"
         }
       }
     }
