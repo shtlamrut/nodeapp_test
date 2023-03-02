@@ -17,7 +17,7 @@ spec:
         - name: sharedvolume
           mountPath: /root/.docker 
     - name: kubectl
-      image: bitnami/kubectl
+      image: bitnami/kubectl:latest
       command:
        - cat
       tty: true
