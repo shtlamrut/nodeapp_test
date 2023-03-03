@@ -23,8 +23,9 @@ pipeline {
          stage('Deploy to K8s') {
 		        steps {	 
 			          container('kubectl') {
-		sh 'sleep 10m'
-                sh 'kubectl apply -f ./deploymentservice.yaml'
+		//sh 'sleep 10m'
+                //sh 'kubectl apply -f ./deploymentservice.yaml'
+		sh 'kubectl get pods -n default'
                 }
            }
 		 }  
