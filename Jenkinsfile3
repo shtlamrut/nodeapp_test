@@ -13,7 +13,7 @@ pipeline {
             steps {
 				        container ('docker') {
                     sh 'docker build -t nodeapp:latest .' 
-                    sh 'docker tag jenkins shtlamrut/nodeapp:$BUILD_NUMBER'
+                    sh 'docker tag nodeapp shtlamrut/nodeapp:$BUILD_NUMBER'
 				          	sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
 					          sh 'docker push docker.io/shtlamrut/nodeapp:$BUILD_NUMBER'
                     //sh 'docker logout'
