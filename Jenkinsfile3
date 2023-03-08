@@ -25,7 +25,7 @@ pipeline {
 			          container('kubectl') {
 		//sh 'sleep 10m'
                 //sh 'kubectl apply -f ./deploymentservice.yaml -n default'
-		sh 'kubectl get pods -n default'
+		sh 'kubectl get pods'
 		sh 'kubectl apply -f hello-world-deployment.yaml'
                 }
            }
