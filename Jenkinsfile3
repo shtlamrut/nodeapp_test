@@ -26,7 +26,7 @@ pipeline {
 		//sh 'sleep 10m'
                 //sh 'kubectl apply -f ./deploymentservice.yaml -n default'
 		sh 'kubectl get pods -n default'
-		sh 'kubectl apply -f hello-world-deployment.yaml'
+		//sh 'kubectl apply -f hello-world-deployment.yaml'
                 }
            }
 		 }  
